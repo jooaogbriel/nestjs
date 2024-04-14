@@ -3,61 +3,54 @@ import {
   Controller,
   Delete,
   Get,
-  HttpException,
   HttpStatus,
-  Inject,
   Param,
   ParseIntPipe,
   Post,
   Put,
-  Scope,
 } from '@nestjs/common';
-import { Connection } from 'src/common/middleware/logger/constants/connection';
 import { CreateSongDTO } from './dto/create-song-dto';
 import { SongsService } from './songs.service';
 
-@Controller({
-  path: 'songs',
-  scope: Scope.REQUEST,
-})
+@Controller('songs')
 export class SongsController {
-  constructor(
-    private songsService: SongsService,
-    @Inject('CONNECTION')
-    private connection: Connection,
-  ) {
-    console.log(`${this.connection.CONNECTION_STRING}`);
-  }
+  constructor(private songsService: SongsService) {}
   @Post()
   create(@Body() createSongDTO: CreateSongDTO) {
     return this.songsService.create(createSongDTO);
   }
-
-  @Get()
-  findAll() {
-    try {
-      const songs = this.songsService.findAll();
-      return songs;
-    } catch (error) {
-      throw (
-        (new HttpException('server error', HttpStatus.INTERNAL_SERVER_ERROR),
-        { cause: error })
-      );
-    }
-  }
-
+  // @Get()
+  // findAll() {
+  //   try {
+  //     return this.songsService.findAll();
+  //   } catch (e) {
+  //     throw new HttpException(
+  //       'server error',
+  //       HttpStatus.INTERNAL_SERVER_ERROR,
+  //       {
+  //         cause: e,
+  //       },
+  //     );
+  //   }
+  // }
   @Get(':id')
-  findOne(@Param('id', ParseIntPipe) id: number) {
-    return `return the id${id}`;
+  findOne(
+    @Param(
+      'id',
+      new ParseIntPipe({ errorHttpStatusCode: HttpStatus.NOT_ACCEPTABLE }),
+    )
+    id: number,
+  ) {
+    return `fetch song on the based on id ${typeof id}`;
   }
 
   @Put(':id')
-  updateOne() {
-    return 'update Song';
+  update() {
+    return 'update song on the based on id';
   }
 
   @Delete(':id')
-  deleteSong() {
-    return 'Delete';
+  delete() {
+    return 'delete song on the based on id';
   }
 }

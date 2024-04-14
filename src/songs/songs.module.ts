@@ -1,22 +1,12 @@
 import { Module } from '@nestjs/common';
-import { connection } from 'src/common/middleware/logger/constants/connection';
+import { TypeOrmModule } from '@nestjs/typeorm';
 import { SongsController } from './songs.controller';
+import { Song } from './songs.entity';
 import { SongsService } from './songs.service';
 
-// const mockSongsService = {
-//   findAll() {
-//     return [{ id: 1, title: 'mockinbird', artists: ['eminem'] }];
-//   },
-// };
-
 @Module({
+  imports: [TypeOrmModule.forFeature([Song])],
   controllers: [SongsController],
-  providers: [
-    SongsService,
-    {
-      provide: 'CONNECTION',
-      useValue: connection,
-    },
-  ],
+  providers: [SongsService],
 })
 export class SongsModule {}

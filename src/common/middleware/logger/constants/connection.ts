@@ -1,7 +1,8 @@
 export const connection: Connection = {
-  CONNECTION_STRING: 'mongo_example',
-  DB: 'MONGODB',
-  DB_NAME: 'TESTE',
+  CONNECTION_STRING:
+    'postgresql://postgres:jooaogbriel17@localhost:/udemy-course',
+  DB: 'postgres',
+  DB_NAME: 'udemy_course',
 };
 export type Connection = {
   CONNECTION_STRING: string;

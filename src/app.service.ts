@@ -1,15 +1,8 @@
-import { Inject, Injectable } from '@nestjs/common';
-import { DevConfigService } from './common/providers';
+import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class AppService {
-  constructor(
-    private devConfigService: DevConfigService,
-    @Inject('CONFIG') private config: { port: string },
-  ) {
-    console.log(config);
-  }
   getHello(): string {
-    return `Hello ${this.devConfigService.getDBHOST()} PORT = ${this.config.port}`;
+    return 'Hello I am learning Nest.js Fundamentals';
   }
 }
