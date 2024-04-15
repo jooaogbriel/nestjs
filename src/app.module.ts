@@ -2,7 +2,7 @@ import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-// import { Artist } from './artists/artist.entity';
+import { Artist } from './artists/artists.entity';
 import { LoggerMiddleware } from './common/middleware/logger/logger.middleware';
 // import { Playlist } from './playlists/playlist.entity';
 // import { PlayListModule } from './playlists/playlists.module';
@@ -21,7 +21,7 @@ import { User } from './users/user.entity';
       port: 5432,
       username: 'postgres',
       password: 'jooaogbriel17',
-      entities: [Song, User],
+      entities: [Song, User, Artist],
       synchronize: true,
     }),
     SongsModule,
