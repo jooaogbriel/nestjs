@@ -1,6 +1,7 @@
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository, UpdateResult } from 'typeorm';
 import { CreateSongDTO } from './dto/create-song-dto';
+import { UpdateSongDto } from './dto/update-song.dto';
 import { Song } from './songs.entity';
 
 export class SongsService {
@@ -16,5 +17,24 @@ export class SongsService {
     song.releasedDate = songTDO.releasedDate;
 
     return await this.songRepository.save(song);
+  }
+
+  async listSongs() {
+    return await this.songRepository.find();
+  }
+
+  async listSong(id: number): Promise<Song> {
+    return await this.songRepository.findOneBy({ id });
+  }
+
+  async deleteSong(id: number) {
+    return await this.songRepository.delete({ id });
+  }
+
+  async updateSong(
+    id: number,
+    updateSongDTO: UpdateSongDto,
+  ): Promise<UpdateResult> {
+    return await this.songRepository.update(id, updateSongDTO);
   }
 }
